@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Reservation List</h1>
+    <div th:each="reservation : ${Reservations}">
+        <div>
+            <p th:text="${reservation.pickupAddress}"></p> <!-- Fill in to display task title -->
+            <p th:text="${reservation.dropoffAddress}"></p>  <!-- Fill in to display task description -->
+            <p><span th:text="${reservation.date}"></span></p>
+            <p><span th:text="${reservation.time}"></span></p><!-- Fill in to display task status -->
+            <a th:href="@{/reservations/reservation/{id}(id=${reservation.id})}">View Reservation</a>
+            <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Edit Reservation</a>
+            <a th:href="@{/reservations/delete/{id}(id=${reservation.id})}">Delete</a><!-- Fill in to generate the delete link -->
+
+        </div>
+    </div>
+    <a th:href="@{/reservations/deleteAll}">Delete All</a>
+
+</body>
+</html>

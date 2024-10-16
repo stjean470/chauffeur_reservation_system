@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Vehicle List</h1>
+    <div th:each="vehicle : ${Vehicles}">
+        <div>
+            <p th:text="${vehicle.year}"></p> <!-- Fill in to display task title -->
+            <p th:text="${vehicle.model}"></p>  <!-- Fill in to display task description -->
+            <p><span th:text="${vehicle.trim}"></span></p>
+            <p><span th:text="${vehicle.passengerCapacity}"></span></p><!-- Fill in to display task status -->
+            <a th:href="@{/vehicles/vehicle/{id}(id=${vehicle.id})}">View Vehicle</a>
+            <a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}">Edit Vehicle</a>
+            <a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}">Delete</a><!-- Fill in to generate the delete link -->
+
+        </div>
+    </div>
+    <a th:href="@{/vehicles/deleteAll}">Delete All</a>
+
+
+</body>
+</html>

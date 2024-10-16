@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Create Reservation</h1>
+
+    <form th:action="@{/reservations/save}" th:object="${reservation}" method="post">
+        <input type="hidden" th:field="${reservation.id}" /> <!-- Hidden field for the customer id -->
+
+        <label>Pickup Address</label>:</label>
+        <input type="text" th:field="${reservation.pickupAddress}" /><br /> <!-- Field for the customer first name -->
+
+        <label>Dropoff Address:</label>
+        <input type="text" th:field="${reservation.dropoffAddress}" /><br /><!-- Field for the customer last Name> -->
+
+        <label>Date:</label>
+        <input type="date" th:field="${reservation.date}" /><br />
+
+        <label>Time:</label>
+        <input type="time" th:field="${reservation.time}" /><br />
+
+        <label>Customer</label>
+        <input type="radio" th:field="*{customer}" th:value="${customer.id}" th:text="${customer.firstName + ' ' + customer.lastName}" required/>
+
+        <button type="submit">Save</button>
+
+    </form>
+</body>
+</html>

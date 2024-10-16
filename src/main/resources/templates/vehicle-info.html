@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:object="${vehicle}">
+        <div>
+            <p th:text="${vehicle.year}"></p> <!-- Fill in to display task title -->
+            <p th:text="${vehicle.model}"></p>  <!-- Fill in to display task description -->
+            <p><span th:text="${vehicle.trim}"></span></p>
+            <p><span th:text="${vehicle.passengerCapacity}"></span></p><!-- Fill in to display task status -->
+        </div>
+        <div th:object="${driver}">
+            <p th:text="${driver.firstName + ' ' + driver.lastName}"></p>
+        </div>
+        <a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}">Edit Vehicle</a>
+    </div>
+    <div>
+        <!--<a href="" -->
+    </div>
+
+</body>
+</html>

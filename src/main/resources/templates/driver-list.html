@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Driver List</h1>
+    <div th:each="driver : ${drivers}">
+        <div>
+            <p th:text="${driver.firstName}"></p> <!-- Fill in to display task title -->
+            <p th:text="${driver.lastName}"></p>  <!-- Fill in to display task description -->
+            <p><span th:text="${driver.email}"></span></p>
+            <p><span th:text="${driver.phoneNumber}"></span></p><!-- Fill in to display task status -->
+            <a th:href="@{/drivers/driver/{id}(id=${driver.id})}">View Driver</a>
+            <a th:href="@{/drivers/edit/{id}(id=${driver.id})}">Edit Driver</a>
+            <a th:href="@{/drivers/delete/{id}(id=${driver.id})}">Delete</a><!-- Fill in to generate the delete link -->
+
+        </div>
+    </div>
+    <a href="/drivers/new">Create Driver</a>
+    <a th:href="@{/drivers/deleteAll}">Delete All</a>
+
+</body>
+</html>

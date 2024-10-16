@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Edit Driver</h1>
+    <form th:action="@{/drivers/update}" th:object="${driver}" method="post">
+        <input type="hidden" th:field="${driver.id}" /> <!-- Hidden field for the driver id -->
+
+        <label>First Name:</label>
+        <input type="text" th:field="${driver.firstName}" /><br /> <!-- Field for the driver first name -->
+
+        <label>Last Name:</label>
+        <input type="text" th:field="${driver.lastName}" /><br /><!-- Field for the driver last Name> -->
+
+        <label>Email:</label>
+        <input type="text" th:field="${driver.email}" /><br /><!-- Field for the driver email> -->
+
+        <label>Phone Number:</label>
+        <input type="text" th:field="${driver.phoneNumber}" /><br /><!-- Field for the driver phone> -->
+
+        <button type="submit">Save</button>
+
+    </form>
+
+</body>
+</html>

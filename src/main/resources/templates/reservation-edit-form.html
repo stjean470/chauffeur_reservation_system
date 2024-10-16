@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form th:action="@{/reservations/update}" th:object="${reservation}" method="post">
+    <input type="hidden" th:field="${reservation.id}" /> <!-- Hidden field for the customer id -->
+
+    <label>Pickup Address:</label>
+    <input type="text" th:field="${reservation.pickupAddress}" /><br /> <!-- Field for the customer first name -->
+
+    <label>Dropoff Address:</label>
+    <input type="text" th:field="${reservation.dropoffAddress}" /><br /><!-- Field for the customer last Name> -->
+
+    <label>Date:</label>
+    <input type="date" th:field="${reservation.date}" /><br />
+
+    <label>Time:</label>
+    <input type="time" th:field="${reservation.time}" /><br />
+
+    <!--<label>Customer:</label>
+    <select th:field="*{customer}" id="customer" required>
+        <option th:each="customer: ${customers}" th:value="${customer.id}" th:text="${customer.firstName}"></option>
+    </select> -->
+
+    <button type="submit">Save</button>
+
+</form>
+</
+
+</body>
+</html>

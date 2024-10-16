@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Customer Info</h1>
+    <div th:object="${customer}">
+        <div>
+            <p th:text="${customer.firstName}"></p> <!-- Fill in to display task title -->
+            <p th:text="${customer.lastName}"></p>  <!-- Fill in to display task description -->
+            <p><span th:text="${customer.email}"></span></p>
+            <p><span th:text="${customer.phoneNumber}"></span></p><!-- Fill in to display task status -->
+        </div>
+        <div th:each="reservation : ${customerReservations}">
+            <p th:text="${reservation.pickupAddress}"></p>
+        </div>
+        <a th:href="@{/reservations/new/{id}(id=${customer.id})}">Add Reservation</a>
+        <a th:href="@{/customers/edit/{id}(id=${customer.id})}">Edit Customer</a>
+        <!--<a th:href="@{/reservation/new/{id}(id=*{id})}">Add Reservation</a> -->
+    </div>
+
+</body>
+</html>

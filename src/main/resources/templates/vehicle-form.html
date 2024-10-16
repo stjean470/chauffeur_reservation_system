@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Create Passenger</h1>
+    <form th:action="@{/vehicles/save}" th:object="${vehicle}" method="post">
+        <input type="hidden" th:field="${vehicle.id}" /> <!-- Hidden field for the vehicle id -->
+
+        <label>Year:</label>
+        <input type="text" th:field="${vehicle.year}" /><br /> <!-- Field for the vehicle year -->
+
+        <label>Model:</label>
+        <input type="text" th:field="${vehicle.model}" /><br /><!-- Field for the vehicle model -->
+
+        <label>Trim:</label>
+        <input type="text" th:field="${vehicle.trim}" /><br /><!-- Field for the vehicle trim -->
+
+        <label>Capacity of Passengers:</label>
+        <input type="text" th:field="${vehicle.passengerCapacity}" /><br /><!-- Field for the vehicle passenger capacity -->
+
+        <label>Driver:</label>
+        <input type="radio" th:field="*{driver}" th:value="${driver.id}" th:text="${driver.firstName + ' ' + driver.lastName}" required/>
+
+        <button type="submit">Save</button>
+
+    </form>
+
+
+</body>
+</html>
