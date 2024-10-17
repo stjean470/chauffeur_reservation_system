@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Register Customer</h1>
+<form th:action="@{/customer/register}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="${customer.id}" /> <!-- Hidden field for the customer id -->
+
+    <label>First Name:</label>
+    <input type="text" th:field="${customer.firstName}" /><br /> <!-- Field for the customer first name -->
+
+    <label>Last Name:</label>
+    <input type="text" th:field="${customer.lastName}" /><br /><!-- Field for the customer last Name> -->
+
+    <label>Email:</label>
+    <input type="text" th:field="${customer.email}" /><br />
+
+
+    <label>Password:</label>
+    <input type="text" th:field="${customer.password}" /><br />
+
+    <label>Phone Number:</label>
+    <input type="text" th:field="${customer.phoneNumber}" /><br />
+
+    <label>Role:</label>
+    <input type="radio" id="role" th:field="*{role}" value="CUSTOMER" />Customer
+
+    <button type="submit">Save</button>
+
+</form>
+
+</body>
+</html>

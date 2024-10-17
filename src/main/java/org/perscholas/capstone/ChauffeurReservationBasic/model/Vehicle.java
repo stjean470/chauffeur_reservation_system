@@ -17,16 +17,19 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Year")
+    @Column(name = "year")
     private int year;
 
-    @Column(name = "Model")
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "model")
     private String model;
 
-    @Column(name = "Trim")
+    @Column(name = "trim")
     private String trim;
 
-    @Column(name = "Passenger Capacity")
+    @Column(name = "passengerCapacity")
     private byte passengerCapacity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

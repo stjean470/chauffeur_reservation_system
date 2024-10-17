@@ -20,16 +20,16 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Pickup Address")
+    @Column(name = "pickupAddress")
     private String pickupAddress;
 
-    @Column(name = "Dropoff Address")
+    @Column(name = "dropoffAddress")
     private String dropoffAddress;
 
-    @Column(name = "Reservation Date")
+    @Column(name = "reservationDate")
     private LocalDate date;
 
-    @Column(name = "Time")
+    @Column(name = "reservationTime")
     private LocalTime time;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

@@ -20,17 +20,24 @@ public class Driver {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "First Name")
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "Last Name")
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "Phone Number")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
 
     @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)

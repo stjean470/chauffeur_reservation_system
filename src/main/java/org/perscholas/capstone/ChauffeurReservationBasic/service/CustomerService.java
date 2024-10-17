@@ -4,6 +4,7 @@ import org.perscholas.capstone.ChauffeurReservationBasic.model.Customer;
 import org.perscholas.capstone.ChauffeurReservationBasic.model.Reservation;
 import org.perscholas.capstone.ChauffeurReservationBasic.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,9 @@ import java.util.Set;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
@@ -30,7 +34,12 @@ public class CustomerService {
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
     }
 
+    public Customer findByEmail(String email) {
+        return customerRepository.findByEmail(email);
+    }
+
     public Customer saveCustomer(Customer customer) {
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         return customerRepository.save(customer);
     }
 
@@ -40,7 +49,7 @@ public class CustomerService {
                     customer.setFirstName(updatedCustomer.getFirstName());
                     customer.setLastName(updatedCustomer.getLastName());
                     customer.setEmail(updatedCustomer.getEmail());
-                    customer.setPassword(updatedCustomer.getPassword());
+                    customer.setPassword(passwordEncoder.encode(updatedCustomer.getPassword()));
                     customer.setPhoneNumber(updatedCustomer.getPhoneNumber());
                     return customerRepository.save(customer);
                 })

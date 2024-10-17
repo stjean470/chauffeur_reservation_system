@@ -22,20 +22,24 @@ public class Customer {
     private long id;
 
 
-    @Column(name = "First Name")
+    @Column(name = "firstName")
     private String firstName;
 
-    @Column(name = "Last Name")
+    @Column(name = "lastName")
     private String lastName;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "Phone Number")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Reservation> reservations = new ArrayList<Reservation>();

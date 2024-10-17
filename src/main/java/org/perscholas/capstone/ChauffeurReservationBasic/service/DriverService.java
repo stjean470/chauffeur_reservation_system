@@ -5,6 +5,7 @@ import org.perscholas.capstone.ChauffeurReservationBasic.model.Driver;
 import org.perscholas.capstone.ChauffeurReservationBasic.model.Vehicle;
 import org.perscholas.capstone.ChauffeurReservationBasic.repository.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,9 @@ import java.util.Set;
 public class DriverService {
     @Autowired
     private DriverRepository driverRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
@@ -30,7 +34,12 @@ public class DriverService {
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
     }
 
+    public Driver findByEmail(String email) {
+        return driverRepository.findByEmail(email);
+    }
+
     public Driver saveDriver(Driver driver) {
+        driver.setPassword(passwordEncoder.encode(driver.getPassword()));
         return driverRepository.save(driver);
     }
 
@@ -40,6 +49,7 @@ public class DriverService {
                     driver.setFirstName(updatedDriver.getFirstName());
                     driver.setLastName(updatedDriver.getLastName());
                     driver.setEmail(updatedDriver.getEmail());
+                    driver.setPassword(passwordEncoder.encode(updatedDriver.getPassword()));
                     driver.setPhoneNumber(updatedDriver.getPhoneNumber());
                     return driverRepository.save(driver);
                 })
