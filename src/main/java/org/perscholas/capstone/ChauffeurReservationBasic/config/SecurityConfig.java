@@ -20,8 +20,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                        .requestMatchers("/registerCustomer", "/registerDriver", "/customer/register", "/driver/register").permitAll()
-                        .requestMatchers("/drivers/**", "/drivers").hasRole("DRIVER")
+                        .requestMatchers("/registerCustomer", "/registerDriver", "/customer/register", "/driver/register", "/home", "/css/**", "/imgs/**").permitAll()
+                        .requestMatchers("/drivers/**", "/drivers", "/reservation/**", "/vehicles/**","/customers/**").hasRole("DRIVER")
                         .requestMatchers("/customers/**", "/customers").hasRole("CUSTOMER")
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
@@ -31,10 +31,8 @@ public class SecurityConfig {
                             authentication.getAuthorities().forEach(grantedAuthority -> {
                                 String role = grantedAuthority.getAuthority();
                                 try {
-                                    if (role.equals("ROLE_DRIVER")) {
-                                        response.sendRedirect("/drivers/driver/{id}");
-                                    }else if(role.equals("ROLE_CUSTOMER")) {
-                                        response.sendRedirect("/customers/customer/{id}");
+                                    if (role.equals("ROLE_DRIVER") || role.equals("ROLE_CUSTOMER")) {
+                                        response.sendRedirect("/home");
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();

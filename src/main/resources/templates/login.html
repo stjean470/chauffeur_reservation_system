@@ -3,22 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
 </head>
 <body>
-<h1>Login with your Information</h1>
-<form th:action="@{/login}" method="post">
-    <!-- Form fields for login -->
-    <label for="username">Email:</label>
-    <input type="email" id="username" name="username" required />
+<div class="main-body">
+    <div class="login-box">
+        <h1>Login with your Information</h1>
+        <form th:action="@{/login}" method="post">
+            <!-- Form fields for login -->
+            <div class="user-info">
+                <label for="username">Email:</label>
+                <input type="email" id="username" name="username" required />
+            </div>
+            <div class="user-info">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required />
+            </div>
+            <div class="user-button">
+                <button id="login-button" type="submit">Login</button>
+            </div>
+        </form>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
+        <a th:href="@{/registerCustomer}">Register as Customer</a>
+        <a th:href="@{/registerDriver}">Register as Driver</a>
 
-    <button type="submit">Login</button>
-</form>
-
-<a th:href="@{/registerCustomer}">Register as Customer</a>
-<a th:href="@{/registerDriver}">Register as Driver</a>
+    </div>
+</div>
 
 
 </body>
