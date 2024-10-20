@@ -1,0 +1,76 @@
+body{
+    background-color: black !important;
+    color: white !important;
+    padding: 20px;
+}
+
+.custom-text-color {
+    color: white;
+}
+
+.container-1 {
+    background: url("./imgs/licoln-navigator-black.jpg") no-repeat center center;
+    background-size: cover;
+
+}
+
+.container-2 {
+    background-color: grey;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 30px;
+
+}
+
+#service-title {
+    display: flex;
+    justify-content: center;
+}
+
+.service-boxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.service-box {
+    background-color: black;
+    padding: 15px;
+}
+.service-box p {
+    margin: 0;
+}
+
+.container-3 {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: auto;
+
+}
+
+.navigator-interior {
+    height: 15rem;
+    width: 15rem;
+}
+
+.offer-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-row: 1fr 1fr 1fr;
+
+}
+
+.info-header {
+    grid-column: 1/3;
+    text-align: center;
+}
+
+.info-detail {
+    text-align: center;
+}
+
+.view-location-bg {
+    background: url("./imgs/atl_georgia.jpg") no-repeat center center;
+    background-size: cover;
+}
