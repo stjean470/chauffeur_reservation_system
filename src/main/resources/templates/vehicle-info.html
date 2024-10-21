@@ -15,6 +15,8 @@
         </div>
         <div th:object="${driver}">
             <p th:text="${driver.firstName + ' ' + driver.lastName}"></p>
+            <a th:href="@{/drivers/driver/{id}(id=${driver.id})}">Back to Driver</a>
+
         </div>
         <a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}">Edit Vehicle</a>
     </div>

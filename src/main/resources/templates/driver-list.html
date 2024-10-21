@@ -6,6 +6,10 @@
 </head>
 <body>
     <h1>Driver List</h1>
+    <a href="/home">Home</a>
+    <a href="/reservations">Reservations List</a>
+    <a href="/customers">Customers List</a>
+    <a href="/vehicles">Vehicles List</a>
     <div th:each="driver : ${drivers}">
         <div>
             <p th:text="${driver.firstName}"></p> <!-- Fill in to display task title -->
@@ -20,6 +24,7 @@
     </div>
     <a href="/drivers/new">Create Driver</a>
     <a th:href="@{/drivers/deleteAll}">Delete All</a>
+    <a href="/home">Home</a>
 
 </body>
 </html>

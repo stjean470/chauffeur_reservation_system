@@ -44,6 +44,7 @@ public class CustomerServiceTest {
         customer.setRole(Role.CUSTOMER);
     }
 
+
     @Test
     void testSaveCustomer_and_encodePassword() {
         //Arrange

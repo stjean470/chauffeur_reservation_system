@@ -9,7 +9,7 @@ body{
 }
 
 .container-1 {
-    background: url("./imgs/licoln-navigator-black.jpg") no-repeat center center;
+    background: url("../imgs/licoln-navigator-black.jpg") no-repeat center center;
     background-size: cover;
 
 }
@@ -71,6 +71,6 @@ body{
 }
 
 .view-location-bg {
-    background: url("./imgs/atl_georgia.jpg") no-repeat center center;
+    background: url("../imgs/atl_georgia.jpg") no-repeat center center;
     background-size: cover;
 }

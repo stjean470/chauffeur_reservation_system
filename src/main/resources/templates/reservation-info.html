@@ -15,6 +15,7 @@
         </div>
        <div th:object="${customer}">
            <p th:text="${customer.firstName + ' ' + customer.lastName}"></p>
+           <a th:href="@{/customers/customer/{id}(id=${customer.id})}">Back to Customer</a>
        </div>
         <div>
             <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Edit Reservation</a>

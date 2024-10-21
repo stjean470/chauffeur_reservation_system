@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .driver_info {
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
 <div th:object="${driver}">
@@ -12,13 +17,21 @@
         <p><span th:text="${driver.email}"></span></p>
         <p><span th:text="${driver.phoneNumber}"></span></p><!-- Fill in to display task status -->
     </div>
-    <div th:each="vehicle: ${driverVehicles}">
+    <div class="vehicle_info" th:each="vehicle: ${driverVehicles}">
+        <label>Year</label>
+        <p th:href="${vehicle.year}"></p>
+        <label>Brand</label>
+        <p th:text="${vehicle.brand}"></p>
+        <label>Model</label>
         <p th:text="${vehicle.model}"></p>
+        <a th:href="@{/vehicles/edit/{id}(id=${vehicle.id})}">Edit Vehicle</a>
         <a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}">Delete Vehicle</a>
     </div>
 </div>
 <a th:href="@{/drivers/edit/{id}(id=${driver.id})}">Edit Driver</a>
 <a th:href="@{/vehicles/new/{id}(id=${driver.id})}">Add Vehicles</a>
+
+<a href="/drivers">Back to Driver List</a>
 
 </body>
 </html>

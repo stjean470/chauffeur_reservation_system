@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .reservation_info {
+            border: 2px solid black;
+        }
+    </style>
 </head>
 <body>
     <h1>Customer Info</h1>
@@ -13,12 +18,24 @@
             <p><span th:text="${customer.email}"></span></p>
             <p><span th:text="${customer.phoneNumber}"></span></p><!-- Fill in to display task status -->
         </div>
-        <div th:each="reservation : ${customerReservations}">
+        <div class="reservation_info" th:each="reservation : ${customerReservations}">
+
+            <label>Pickup Address</label>
             <p th:text="${reservation.pickupAddress}"></p>
+            <label>Dropff Address</label>
+            <p th:text="${reservation.dropoffAddress}"></p>
+            <label>Reservation Date</label>
+            <p th:text="${reservation.date}"></p>
+            <label>Pickup Address</label>
+            <p th:text="${reservation.pickupAddress}"></p>
+            <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Edit Reservation</a>
+            <a th:href="@{/reservations/delete/{id}(id=${reservation.id})}">Delete Reservation</a>
         </div>
         <a th:href="@{/reservations/new/{id}(id=${customer.id})}">Add Reservation</a>
         <a th:href="@{/customers/edit/{id}(id=${customer.id})}">Edit Customer</a>
-        <!--<a th:href="@{/reservation/new/{id}(id=*{id})}">Add Reservation</a> -->
+        <a href="/customers">Back to Customer List</a>
+        <a th:href="@{/home}">Home</a>
+
     </div>
 
 </body>

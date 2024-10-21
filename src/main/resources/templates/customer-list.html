@@ -6,6 +6,7 @@
 </head>
 <body>
     <h1>Customer List</h1>
+    <a href="/home">Home</a>
     <div th:each="customer : ${customers}">
         <div>
             <p th:text="${customer.firstName}"></p> <!-- Fill in to display task title -->
@@ -19,7 +20,10 @@
         </div>
     </div>
     <a href="/customers/new">Create Customer</a>
+    <a th:href="@{/home}">Home</a>
     <a th:href="@{/customers/deleteAll}">Delete All</a>
+
+
 
 </body>
 </html>
