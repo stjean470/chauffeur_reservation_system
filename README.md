@@ -92,8 +92,8 @@ Ensure that you have the following installed:
 ### Steps to Run the Project
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-repo/chauffeur-reservation-system.git
-   cd chauffeur-reservation-system
+   git clone https://github.com/stjean470/chauffeur_reservation_system.git
+   cd chauffeur_reservation_system
    ```
 
 2. **Set up the database**:
@@ -120,7 +120,7 @@ Ensure that you have the following installed:
 5. **Access the application**:
    Open your browser and navigate to:
    ```
-   http://localhost:8080
+   http://localhost:8080/login
    ```
 
 ## Usage
