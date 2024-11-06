@@ -13,6 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -44,6 +48,19 @@ public class CustomerServiceTest {
         customer.setRole(Role.CUSTOMER);
     }
 
+    @Test
+    void testGetAllCustomers() {
+        List<Customer> customerList = Arrays.asList(customer);
+        when(customerRepository.findAll()).thenReturn(customerList);
+
+        //Act
+        List<Customer> result = customerService.getAllCustomers();
+
+        //Assert
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(customerList, result);
+    }
+
 
     @Test
     void testSaveCustomer_and_encodePassword() {
@@ -57,6 +74,44 @@ public class CustomerServiceTest {
         //Assert
         assertEquals("encoded", customer.getPassword());
         assertEquals(customer, customerRepository.save(customer));
+    }
+
+    @Test
+    void testGetCustomerById() {
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+
+        //Act
+        Customer result = customerService.getCustomerById(1L);
+
+        //Assert
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(customer, result);
+        Assertions.assertEquals(customer.getId(), result.getId());
+    }
+
+    /*
+    @Test
+    void testUpdateCustomer() {
+        when(customerRepository.save(customer)).thenReturn(customer);
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
+
+        //Act
+        customerService.saveCustomer(customer);
+        Customer updatedCustomer = new Customer();
+        updatedCustomer.setFirstName("Johnny");
+        updatedCustomer.setLastName("Don");
+        updatedCustomer.
+    } */
+    @Test
+    void testDeleteCustomer() {
+        //Arrange
+        when(customerRepository.save(customer)).thenReturn(customer);
+
+        //Act
+        Customer result = customerService.saveCustomer(customer);
+
+        customerService.deleteCustomer(1l);
+        verify(customerRepository, times(1)).deleteById(1l);
     }
 
 
