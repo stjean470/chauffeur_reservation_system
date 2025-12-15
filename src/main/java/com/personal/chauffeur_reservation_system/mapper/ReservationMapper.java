@@ -1,16 +1,17 @@
 package com.personal.chauffeur_reservation_system.mapper;
 
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
+import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
 
 public class ReservationMapper {
-    public static Reservation mapReservationToReservation(ReservationDto reservationDto) {
+    public static Reservation mapReservationDtoToReservation(ReservationDto reservationDto, Customer customer) {
         return new Reservation(
             reservationDto.getPickupAddress(),
             reservationDto.getDestination(),
             reservationDto.getDate(),
             reservationDto.getTime(),
-            null
+            customer
             
         );
     }
