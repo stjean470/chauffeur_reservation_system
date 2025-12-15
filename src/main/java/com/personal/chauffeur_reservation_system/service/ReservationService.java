@@ -1,5 +1,8 @@
 package com.personal.chauffeur_reservation_system.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
@@ -25,6 +28,14 @@ public class ReservationService {
         Customer customerMakingReservation = customerRepository.findById(reservationDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException("Customer does not exist. Can't make Reservation"));
         Reservation reservation = reservationRepository.save(ReservationMapper.mapReservationDtoToReservation(reservationDto, customerMakingReservation));
         return ReservationMapper.mapReservationToReservationDto(reservation);
+    }
+
+    public List<ReservationDto> getReservations() {
+        List<ReservationDto> reservations = new ArrayList<>();
+        for (Reservation reservation : reservationRepository.findAll()) {
+            reservations.add(ReservationMapper.mapReservationToReservationDto(reservation));
+        }
+        return reservations;
     }
 
 }
