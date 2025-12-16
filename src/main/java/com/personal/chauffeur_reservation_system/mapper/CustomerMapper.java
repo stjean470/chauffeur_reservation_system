@@ -1,5 +1,7 @@
 package com.personal.chauffeur_reservation_system.mapper;
 
+import java.util.ArrayList;
+
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
 import com.personal.chauffeur_reservation_system.model.Customer;
 
@@ -10,7 +12,7 @@ public class CustomerMapper {
             customerDto.getLastName(), 
             customerDto.getEmail(), 
             customerDto.getPhoneNumber(), 
-            null);
+            new ArrayList<>());
     }
 
     public static CustomerDto mapToCustomerDto (Customer customer) {
