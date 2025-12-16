@@ -26,8 +26,12 @@ public class ReservationService {
 
     public ReservationDto createReservation(ReservationDto reservationDto) {
         Customer customerMakingReservation = customerRepository.findById(reservationDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException("Customer does not exist. Can't make Reservation"));
-        Reservation reservation = reservationRepository.save(ReservationMapper.mapReservationDtoToReservation(reservationDto, customerMakingReservation));
-        return ReservationMapper.mapReservationToReservationDto(reservation);
+        Reservation reservation = ReservationMapper.mapReservationDtoToReservation(reservationDto, customerMakingReservation);
+        customerMakingReservation.getReservations().add(reservation);
+        customerRepository.save(customerMakingReservation);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        return ReservationMapper.mapReservationToReservationDto(savedReservation);
     }
 
     public List<ReservationDto> getReservations() {

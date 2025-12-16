@@ -55,5 +55,48 @@ public class ReservationRepositoryTest {
         Assertions.assertNotNull(savedReservation.getCustomer()); 
         Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
     }
+
+    @Test
+    public void ReservationRepository_GetAllReservations_ReturnAllReservations() {
+        //Arrange. Must create the customer first before we create the reservation. Reservation is dependent on the customer
+        Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(new ArrayList<>())
+            .build();
+
+        Reservation reservation1 = Reservation.builder()
+            .pickupAddress("217 Princeton Court")
+            .destination("1400 Townpark Drive")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+            
+        Reservation reservation2 = Reservation.builder()
+            .pickupAddress("378 South Cobb Drive")
+            .destination("1456 Powder Springs Road")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+
+        //Act. Add the customer to the database before the customer
+        customer.getReservations().add(reservation1);
+        customer.getReservations().add(reservation2);
+        Customer savedCustomer = customerRepository.save(customer);
+        reservationRepository.save(reservation1);
+        reservationRepository.save(reservation2);
+
+        //Assert
+        Assertions.assertNotNull(savedCustomer);
+        Assertions.assertNotNull(reservationRepository.findAll());
+        Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
+        Assertions.assertTrue(reservationRepository.findAll().size() > 0);
+    } 
+
+
     
 }
