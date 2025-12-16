@@ -20,7 +20,6 @@ public class CustomerRepositoryTest {
     @Test
     public void CustomerRepository_SaveAll_ReturnSavedCustomer() {
         //Arrange
-
         Customer customer = Customer.builder()
             .firstName("Brandon")
             .lastName("Williams")
@@ -30,12 +29,38 @@ public class CustomerRepositoryTest {
             .build();
 
         //Act
-
         Customer savedCustomer = customerRepository.save(customer);
 
         //Assert
-
         Assertions.assertNotNull(savedCustomer);
         Assertions.assertTrue(savedCustomer.getId() > 0);
+    }
+
+    @Test
+    public void CustomerRepository_GetAll_GetListOfCustomers() {
+        //Arrange
+        Customer customer1 = Customer.builder()
+            .firstName("Randy")
+            .lastName("Orton")
+            .email("theviper@wwe.com")
+            .phoneNumber("838-090-2127")
+            .reservations(null)
+            .build();
+        
+        Customer customer2 = Customer.builder()
+            .firstName("D'vorah")
+            .lastName("Beetle")
+            .email("thehive@mortalkombat.com")
+            .phoneNumber("331-365-2847")
+            .reservations(null)
+            .build();
+
+        //Act
+        customerRepository.save(customer1);
+        customerRepository.save(customer2);
+
+        //Assert
+        Assertions.assertNotNull(customerRepository.findAll());
+        Assertions.assertTrue(customerRepository.findAll().size() > 0);
     }
 }
