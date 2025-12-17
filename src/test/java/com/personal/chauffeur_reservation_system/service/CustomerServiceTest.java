@@ -1,6 +1,12 @@
 package com.personal.chauffeur_reservation_system.service;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,7 +35,7 @@ public class CustomerServiceTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(null)
+            .reservations(new ArrayList<>())
             .build();
 
         CustomerDto customerDto = CustomerDto.builder()
@@ -44,6 +50,39 @@ public class CustomerServiceTest {
         CustomerDto saveCustomer = customerService.createCustomer(customerDto);
 
         Assertions.assertNotNull(saveCustomer);
+    }
+
+    @Test
+    public void CustomerService_GetAllCustomers_ReturnListCustomerDto() {
+         Customer customer1 = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(new ArrayList<>())
+            .build();
+
+        Customer customer2 = Customer.builder()
+            .firstName("William")
+            .lastName("Regal")
+            .email("theArchitect@vsu.edu")
+            .phoneNumber("331-243-2921")
+            .reservations(new ArrayList<>())
+            .build();
+
+
+        List<Customer> customers = Arrays.asList(customer1, customer2);
+        
+        
+        when(customerRepository.findAll()).thenReturn(customers);
+
+
+        List<CustomerDto> savedCustomers = customerService.getAllCustomers();
+
+        Assertions.assertNotNull(savedCustomers);
+        Assertions.assertEquals(2, savedCustomers.size());
+
+        verify(customerRepository, times(1)).findAll();
     }
     
 }

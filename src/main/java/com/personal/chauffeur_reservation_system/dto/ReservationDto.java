@@ -3,6 +3,9 @@ package com.personal.chauffeur_reservation_system.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import lombok.Builder;
+
+@Builder
 public class ReservationDto {
     private long id;
     private String pickupAddress;
