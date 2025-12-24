@@ -32,7 +32,7 @@ public class CustomerController {
     public ResponseEntity<List<CustomerDto>> getCustomers() {
         try {
             return new ResponseEntity<List<CustomerDto>>(customerService.getAllCustomers(), HttpStatus.OK);
-        } catch (Exception e) {
+        }catch (Exception e) {
             return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
         }
     }
@@ -41,7 +41,7 @@ public class CustomerController {
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
         try {
             return new ResponseEntity<CustomerDto>(customerService.createCustomer(customerDto), HttpStatus.CREATED);
-        } catch (Exception e) {
+        }catch (Exception e) {
             return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
         }
         
