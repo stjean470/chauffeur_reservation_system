@@ -1,10 +1,14 @@
 package com.personal.chauffeur_reservation_system.service;
 
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.exceptions.base.MockitoException;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
@@ -82,9 +85,50 @@ public class ReservationServiceTest {
         CustomerDto saveCustomer = customerService.createCustomer(customerDto);
         ReservationDto savedReservation = reservationService.createReservation(reservationDto);
 
+
         Assertions.assertNotNull(saveCustomer);
         Assertions.assertNotNull(savedReservation);
+    }
 
+    @Test
+    public void ReservationService_GetAllReservations_ReturnListOfReservations() {
+        //Arrange Customer before Reservations
+        Customer customer = Customer.builder()
+            .id(1L)
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(new ArrayList<>())
+            .build();
+        
+        
+        Reservation reservation1 = Reservation.builder()
+            .id(1L)
+            .pickupAddress("217 Princeton Court")
+            .destination("1400 Townpark Drive")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+        
+        Reservation reservation2 = Reservation.builder()
+            .id(1L)
+            .pickupAddress("1500 North Patterson Street")
+            .destination("1400 Townpark Drive")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+        
+        List<Reservation> reservations = Arrays.asList(reservation1, reservation2);
 
+        when(reservationRepository.findAll()).thenReturn(reservations);
+
+        List<ReservationDto> reservationDtos = reservationService.getReservations();
+
+        Assertions.assertNotNull(customer);
+        Assertions.assertNotNull(reservationDtos);
+        verify(reservationRepository, times(1)).findAll(); 
     }
 }
