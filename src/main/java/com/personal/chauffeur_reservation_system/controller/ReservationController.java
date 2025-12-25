@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -48,6 +49,16 @@ public class ReservationController {
             return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
         }
     }
+
+    @GetMapping("/reservation/{id}")
+    public ResponseEntity<ReservationDto> getReservation(@PathVariable long id) {
+        try {
+            return new ResponseEntity<ReservationDto>(reservationService.getReservationById(id), HttpStatus.OK);
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
+        }
+    }
+    
     
     
 }

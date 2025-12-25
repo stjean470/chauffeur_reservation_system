@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
 import com.personal.chauffeur_reservation_system.exceptions.CustomerNotFoundException;
+import com.personal.chauffeur_reservation_system.exceptions.ReservationNotFoundException;
 import com.personal.chauffeur_reservation_system.mapper.ReservationMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
@@ -40,6 +41,11 @@ public class ReservationService {
             reservations.add(ReservationMapper.mapReservationToReservationDto(reservation));
         }
         return reservations;
+    }
+
+    public ReservationDto getReservationById(long id) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+        return ReservationMapper.mapReservationToReservationDto(reservation);
     }
 
 }
