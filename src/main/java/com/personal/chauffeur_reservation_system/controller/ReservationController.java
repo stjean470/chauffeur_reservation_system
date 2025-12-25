@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
 import com.personal.chauffeur_reservation_system.exceptions.CustomerNotFoundException;
+import com.personal.chauffeur_reservation_system.exceptions.ReservationNotFoundException;
 import com.personal.chauffeur_reservation_system.service.ReservationService;
 
 import java.util.List;
@@ -54,6 +55,8 @@ public class ReservationController {
     public ResponseEntity<ReservationDto> getReservation(@PathVariable long id) {
         try {
             return new ResponseEntity<ReservationDto>(reservationService.getReservationById(id), HttpStatus.OK);
+        }catch (ReservationNotFoundException rnfe) {
+            return ResponseEntity.notFound().header("message", rnfe.getMessage()).build();
         }catch (Exception e) {
             return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
         }

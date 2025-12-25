@@ -3,6 +3,7 @@ package com.personal.chauffeur_reservation_system.repository;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -96,6 +97,35 @@ public class ReservationRepositoryTest {
         Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
         Assertions.assertTrue(reservationRepository.findAll().size() > 0);
     } 
+
+    @Test
+    public void ReservationRepository_GetReservationById_ReturnReservation() {
+        Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(new ArrayList<>())
+            .build();
+
+        Reservation reservation = Reservation.builder()
+            .pickupAddress("217 Princeton Court")
+            .destination("1400 Townpark Drive")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+
+
+        //Act. Add the customer to the database before the customer
+        customer.getReservations().add(reservation);
+        customerRepository.save(customer);
+        reservationRepository.save(reservation);
+
+        Optional<Reservation> returnedReservation = reservationRepository.findById(1L);
+
+        Assertions.assertNotNull(returnedReservation);
+    }
 
 
     

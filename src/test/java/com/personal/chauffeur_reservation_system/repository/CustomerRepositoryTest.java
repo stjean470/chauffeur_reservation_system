@@ -1,7 +1,10 @@
 package com.personal.chauffeur_reservation_system.repository;
 
 
+import java.util.Optional;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -62,5 +65,25 @@ public class CustomerRepositoryTest {
         //Assert
         Assertions.assertNotNull(customerRepository.findAll());
         Assertions.assertTrue(customerRepository.findAll().size() > 0);
+    }
+
+    @Test 
+    public void CustomerRepository_GetCustomerById_ReturnCustomer() {
+         Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(null)
+            .build();
+
+        //Act
+        customerRepository.save(customer);
+
+        Optional<Customer> returnedCustomer = customerRepository.findById(1L);
+
+        Assertions.assertNotNull(returnedCustomer);
+        
+
     }
 }
