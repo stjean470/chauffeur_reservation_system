@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
+import com.personal.chauffeur_reservation_system.exceptions.CustomerNotFoundException;
 import com.personal.chauffeur_reservation_system.mapper.CustomerMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.repository.CustomerRepository;
@@ -30,5 +31,10 @@ public class CustomerService {
             customers.add(CustomerMapper.mapToCustomerDto(customer));
         }
         return customers;
+    }
+
+    public CustomerDto getCustomerById(long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        return CustomerMapper.mapToCustomerDto(customer);
     } 
 }
