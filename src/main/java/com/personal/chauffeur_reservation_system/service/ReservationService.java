@@ -54,7 +54,8 @@ public class ReservationService {
         reservation.setDestination(reservationDto.getDestination());
         reservation.setDate(reservationDto.getDate());
         reservation.setTime(reservationDto.getTime());
-        return ReservationMapper.mapReservationToReservationDto(reservation);
+        Reservation updatedReservation = reservationRepository.save(reservation);
+        return ReservationMapper.mapReservationToReservationDto(updatedReservation);
     }
 
 }

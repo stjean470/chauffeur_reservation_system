@@ -127,5 +127,16 @@ public class ReservationServiceTest {
 
     
 
+    @Test
+    public void ReservationService_UpdateReservation_ReturnSavedReservation() {
+        when(reservationRepository.save(Mockito.any(Reservation.class))).thenReturn(reservation);
+        when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
+        
+        ReservationDto updatedReservation = reservationService.updateReservation(1L, reservationDto);
+
+        Assertions.assertNotNull(updatedReservation);
+    }
+    
+
 
 }

@@ -92,6 +92,16 @@ public class CustomerServiceTest {
         Assertions.assertNotNull(saveCustomer);
     }
 
+    @Test
+    public void CustomerService_UpdateCustomer_ReturnCustomerDto() {
+
+        when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(customer);
+        when(customerRepository.findById(1L)).thenReturn(Optional.ofNullable(customer));
+
+        CustomerDto saveCustomer = customerService.updateCustomer(1L, customerDto);
+
+        Assertions.assertNotNull(saveCustomer);
+    }
 
     
 }
