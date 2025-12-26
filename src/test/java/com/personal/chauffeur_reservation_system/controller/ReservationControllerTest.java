@@ -122,12 +122,14 @@ public class ReservationControllerTest {
     public void ReservationController_GetReservation_ReturnReservationDtoResponse() throws Exception {
         when(reservationService.getReservationById(1L)).thenReturn(reservationDto);
 
-        ResultActions response = mockMvc.perform(get("/reservations/reservation/1")
+        ResultActions response = mockMvc.perform(get("/reservations/reservation/{id}", 1L)
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(reservationDto)));
             
         response.andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print());
-    } 
+    }
+    
+    
     
 }

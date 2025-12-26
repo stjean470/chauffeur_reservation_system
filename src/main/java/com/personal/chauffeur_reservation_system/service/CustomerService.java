@@ -36,5 +36,15 @@ public class CustomerService {
     public CustomerDto getCustomerById(long id) {
         Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
         return CustomerMapper.mapToCustomerDto(customer);
+    }
+
+    public CustomerDto updateCustomer(long id, CustomerDto customerDto) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        customer.setFirstName(customerDto.getFirstName());
+        customer.setLastName(customerDto.getLastName());
+        customer.setEmail(customerDto.getEmail());
+        customer.setPhoneNumber(customerDto.getPhoneNumber());
+        Customer savedCustomer = customerRepository.save(customer);
+        return CustomerMapper.mapToCustomerDto(savedCustomer);
     } 
 }

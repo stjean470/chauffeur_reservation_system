@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -58,6 +60,18 @@ public class CustomerController {
         }catch (Exception e) {
             return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
         }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable long id, @RequestBody CustomerDto customerDto) {
+        try {
+            return new ResponseEntity<CustomerDto>(customerService.updateCustomer(id, customerDto), HttpStatus.OK);
+        }catch (CustomerNotFoundException cnfe) {
+            return ResponseEntity.notFound().header("message", cnfe.getMessage()).build();
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
+        }
+        
     }
     
     
