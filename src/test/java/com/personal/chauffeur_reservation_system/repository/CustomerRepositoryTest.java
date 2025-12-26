@@ -83,7 +83,28 @@ public class CustomerRepositoryTest {
         Optional<Customer> returnedCustomer = customerRepository.findById(1L);
 
         Assertions.assertNotNull(returnedCustomer);
-        
-
     }
+
+    @Test
+    public void CustomerRepository_UpdateCustomer_ReturnCustomer() {
+        Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(null)
+            .build();
+
+        customerRepository.save(customer);
+
+        Customer customerSave = customerRepository.findById(customer.getId()).get();
+        customerSave.setFirstName("Faith");
+        customerSave.setLastName("Herman");
+        customerSave.setEmail("byTheFaith@gmail.com");
+        customerSave.setPhoneNumber("404-900-1221");
+        Customer updatedCustomer = customerRepository.save(customerSave);
+        Assertions.assertNotNull(updatedCustomer);
+        Assertions.assertTrue(updatedCustomer.getId() > 0);
+    }
+    
 }

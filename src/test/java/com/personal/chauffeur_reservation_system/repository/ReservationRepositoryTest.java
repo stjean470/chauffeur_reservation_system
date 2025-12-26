@@ -127,6 +127,42 @@ public class ReservationRepositoryTest {
         Assertions.assertNotNull(returnedReservation);
     }
 
+    @Test
+    public void ReservationRepository_UpdateReservation_ReturnUpdatedReservation() {
+        //Arrange. Must create the customer first before we create the reservation. Reservation is dependent on the customer
+        Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(new ArrayList<>())
+            .build();
 
-    
+        Reservation reservation = Reservation.builder()
+            .pickupAddress("217 Princeton Court")
+            .destination("1400 Townpark Drive")
+            .date(LocalDate.now())
+            .time(LocalTime.now())
+            .customer(customer)
+            .build();
+
+
+        //Act. Add the customer to the database before the customer
+        customer.getReservations().add(reservation);
+        Customer savedCustomer = customerRepository.save(customer);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        Reservation reservationToUpdate = reservationRepository.findById(savedReservation.getId()).get();
+        reservationToUpdate.setPickupAddress("2650 Bentley Road SE");
+        reservationToUpdate.setDestination("1200 Ernest Barrett Parkway");
+        reservationToUpdate.setDate(LocalDate.now());
+        reservationToUpdate.setTime(LocalTime.now());
+
+        Reservation updatedReservation = reservationRepository.save(reservationToUpdate);
+
+        //Assert
+        Assertions.assertNotNull(savedCustomer);
+        Assertions.assertNotNull(updatedReservation);
+        Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
+    }    
 }
