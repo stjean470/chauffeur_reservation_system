@@ -103,4 +103,17 @@ public class CustomerControllerTest {
                 
     }
 
+    @Test
+    public void CustomerController_GetCustomer_ReturnCustomerDto() throws Exception {
+        when(customerService.getCustomerById(1L)).thenReturn(customerDto);
+
+        ResultActions response = mockMvc.perform(get("/customers/customer/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(customerDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", CoreMatchers.is(customerDto.getFirstName())))
+            .andDo(MockMvcResultHandlers.print());
+    }
+
 }

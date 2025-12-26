@@ -117,5 +117,17 @@ public class ReservationControllerTest {
         
         response.andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    public void ReservationController_GetReservation_ReturnReservationDtoResponse() throws Exception {
+        when(reservationService.getReservationById(1L)).thenReturn(reservationDto);
+
+        ResultActions response = mockMvc.perform(get("/reservations/reservation/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(reservationDto)));
+            
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print());
+    } 
     
 }
