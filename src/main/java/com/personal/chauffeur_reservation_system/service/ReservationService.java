@@ -48,4 +48,13 @@ public class ReservationService {
         return ReservationMapper.mapReservationToReservationDto(reservation);
     }
 
+    public ReservationDto updateReservation(long id, ReservationDto reservationDto) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+        reservation.setPickupAddress(reservationDto.getPickupAddress());
+        reservation.setDestination(reservationDto.getDestination());
+        reservation.setDate(reservationDto.getDate());
+        reservation.setTime(reservationDto.getTime());
+        return ReservationMapper.mapReservationToReservationDto(reservation);
+    }
+
 }

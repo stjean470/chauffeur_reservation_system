@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -55,6 +57,17 @@ public class ReservationController {
     public ResponseEntity<ReservationDto> getReservation(@PathVariable long id) {
         try {
             return new ResponseEntity<ReservationDto>(reservationService.getReservationById(id), HttpStatus.OK);
+        }catch (ReservationNotFoundException rnfe) {
+            return ResponseEntity.notFound().header("message", rnfe.getMessage()).build();
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<ReservationDto> updateReservation(@PathVariable long id, @RequestBody ReservationDto reservationDto) {
+        try {
+            return new ResponseEntity<ReservationDto>(reservationService.updateReservation(id, reservationDto), HttpStatus.OK);
         }catch (ReservationNotFoundException rnfe) {
             return ResponseEntity.notFound().header("message", rnfe.getMessage()).build();
         }catch (Exception e) {
