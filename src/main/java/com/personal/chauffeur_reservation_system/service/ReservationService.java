@@ -58,4 +58,10 @@ public class ReservationService {
         return ReservationMapper.mapReservationToReservationDto(updatedReservation);
     }
 
+    public String deleteReservationById(long id) {
+        Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+        reservationRepository.deleteById(id);
+        return reservation.toString() + " has been deleted!";
+    }
+
 }

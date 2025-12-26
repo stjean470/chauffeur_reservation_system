@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +69,17 @@ public class ReservationController {
     public ResponseEntity<ReservationDto> updateReservation(@PathVariable long id, @RequestBody ReservationDto reservationDto) {
         try {
             return new ResponseEntity<ReservationDto>(reservationService.updateReservation(id, reservationDto), HttpStatus.OK);
+        }catch (ReservationNotFoundException rnfe) {
+            return ResponseEntity.notFound().header("message", rnfe.getMessage()).build();
+        }catch (Exception e) {
+            return ResponseEntity.internalServerError().header("message", e.getMessage()).build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteReservation(@PathVariable long id) {
+        try {
+            return new ResponseEntity<String>(reservationService.deleteReservationById(id), HttpStatus.OK);
         }catch (ReservationNotFoundException rnfe) {
             return ResponseEntity.notFound().header("message", rnfe.getMessage()).build();
         }catch (Exception e) {
