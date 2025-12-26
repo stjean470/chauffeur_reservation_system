@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -123,6 +124,18 @@ public class ReservationControllerTest {
         when(reservationService.getReservationById(1L)).thenReturn(reservationDto);
 
         ResultActions response = mockMvc.perform(get("/reservations/reservation/{id}", 1L)
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(reservationDto)));
+            
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void ReservationController_UpdateReservation_ReturnReservationDtoResponse() throws Exception {
+        when(reservationService.updateReservation(1L, reservationDto)).thenReturn(reservationDto);
+
+        ResultActions response = mockMvc.perform(put("/reservations/update/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(reservationDto)));
             

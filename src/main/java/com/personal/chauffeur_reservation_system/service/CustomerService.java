@@ -46,5 +46,11 @@ public class CustomerService {
         customer.setPhoneNumber(customerDto.getPhoneNumber());
         Customer savedCustomer = customerRepository.save(customer);
         return CustomerMapper.mapToCustomerDto(savedCustomer);
+    }
+
+    public String deleteCustomerById(long id) {
+        Customer customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        customerRepository.deleteById(id);
+        return "Customer: " + customer.toString() + " has been deleted!";
     } 
 }

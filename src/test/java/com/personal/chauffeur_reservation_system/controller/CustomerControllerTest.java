@@ -37,6 +37,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = CustomerController.class)
@@ -108,6 +109,19 @@ public class CustomerControllerTest {
         when(customerService.getCustomerById(1L)).thenReturn(customerDto);
 
         ResultActions response = mockMvc.perform(get("/customers/customer/1")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(customerDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", CoreMatchers.is(customerDto.getFirstName())))
+            .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void CustomerController_UpdateCustomer_ReturnCustomerDto() throws Exception {
+        when(customerService.updateCustomer(1L, customerDto)).thenReturn(customerDto);
+
+        ResultActions response = mockMvc.perform(put("/customers/update/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(customerDto)));
 
