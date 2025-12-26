@@ -7,8 +7,10 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,6 +19,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
+import com.personal.chauffeur_reservation_system.mapper.CustomerMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.repository.CustomerRepository;
 
@@ -28,22 +31,24 @@ public class CustomerServiceTest {
     @InjectMocks
     private CustomerService customerService; 
 
-    @Test
-    public void CustomerService_CreateCustomer_ReturnCustomerDto() {
-         Customer customer = Customer.builder()
+    private Customer customer;
+
+    private CustomerDto customerDto;
+
+    @BeforeEach
+    public void init() {
+        customer = Customer.builder()
             .firstName("Brandon")
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
             .reservations(new ArrayList<>())
             .build();
+        customerDto = CustomerMapper.mapToCustomerDto(customer);
+    }
 
-        CustomerDto customerDto = CustomerDto.builder()
-            .firstName("Brandon")
-            .lastName("Williams")
-            .email("brandonWilliams@vsu.edu")
-            .phoneNumber("404-890-4527")
-            .build();
+    @Test
+    public void CustomerService_CreateCustomer_ReturnCustomerDto() {
 
         when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(customer);
 
@@ -54,13 +59,6 @@ public class CustomerServiceTest {
 
     @Test
     public void CustomerService_GetAllCustomers_ReturnListCustomerDto() {
-         Customer customer1 = Customer.builder()
-            .firstName("Brandon")
-            .lastName("Williams")
-            .email("brandonWilliams@vsu.edu")
-            .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
-            .build();
 
         Customer customer2 = Customer.builder()
             .firstName("William")
@@ -71,7 +69,7 @@ public class CustomerServiceTest {
             .build();
 
 
-        List<Customer> customers = Arrays.asList(customer1, customer2);
+        List<Customer> customers = Arrays.asList(customer, customer2);
         
         
         when(customerRepository.findAll()).thenReturn(customers);
@@ -84,5 +82,16 @@ public class CustomerServiceTest {
 
         verify(customerRepository, times(1)).findAll();
     }
+
+    @Test
+    public void CustomerService_GetCustomerById_ReturnCustomerDto() {
+        when(customerRepository.findById(1L)).thenReturn(Optional.ofNullable(customer));
+
+        CustomerDto saveCustomer = customerService.getCustomerById(1L);
+
+        Assertions.assertNotNull(saveCustomer);
+    }
+
+
     
 }
