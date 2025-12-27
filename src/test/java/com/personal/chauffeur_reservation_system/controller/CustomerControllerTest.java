@@ -1,6 +1,7 @@
 package com.personal.chauffeur_reservation_system.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ import com.personal.chauffeur_reservation_system.service.CustomerService;
 
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -128,6 +130,16 @@ public class CustomerControllerTest {
         response.andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.jsonPath("$.firstName", CoreMatchers.is(customerDto.getFirstName())))
             .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void CustomerController_DeleteCustomer_ReturnDeletedMessage() throws Exception {
+        when(customerService.deleteCustomerById(1L)).thenReturn("Customer has been Deleted!");
+
+        ResultActions response = mockMvc.perform(delete("/customers/delete/1")
+            .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 }

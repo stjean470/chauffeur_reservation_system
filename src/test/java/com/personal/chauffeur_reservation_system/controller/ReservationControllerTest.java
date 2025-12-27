@@ -2,6 +2,7 @@ package com.personal.chauffeur_reservation_system.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -141,6 +142,16 @@ public class ReservationControllerTest {
             
         response.andExpect(MockMvcResultMatchers.status().isOk())
             .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void ReservationController_DeleteReservation_ReturnDeletedMessage() throws Exception {
+        when(reservationService.deleteReservationById(1L)).thenReturn("Reservation has been Deleted!");
+
+        ResultActions response = mockMvc.perform(delete("/reservations/delete/{id}", 1L)
+            .contentType(MediaType.APPLICATION_JSON));
+            
+        response.andExpect(MockMvcResultMatchers.status().isOk());
     }
     
     
