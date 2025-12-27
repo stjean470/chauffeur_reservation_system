@@ -136,6 +136,13 @@ public class ReservationServiceTest {
 
         Assertions.assertNotNull(updatedReservation);
     }
+
+    @Test
+    public void ReservationService_DeleteReservationById_ReturnReservationDto() {
+        when(reservationRepository.findById(1L)).thenReturn(Optional.of(reservation));
+
+        Assertions.assertAll(() -> reservationService.deleteReservationById(1L));
+    }
     
 
 

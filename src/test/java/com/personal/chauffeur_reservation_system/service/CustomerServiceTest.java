@@ -103,5 +103,12 @@ public class CustomerServiceTest {
         Assertions.assertNotNull(saveCustomer);
     }
 
+    @Test
+    public void CustomerService_DeleteCustomer_ReturnDeletedCustomerMessage() {
+        when(customerRepository.findById(1L)).thenReturn(Optional.ofNullable(customer));
+
+        Assertions.assertAll(() -> customerService.deleteCustomerById(1L));
+    }
+
     
 }
