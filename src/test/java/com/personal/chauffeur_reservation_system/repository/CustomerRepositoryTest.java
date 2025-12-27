@@ -106,5 +106,24 @@ public class CustomerRepositoryTest {
         Assertions.assertNotNull(updatedCustomer);
         Assertions.assertTrue(updatedCustomer.getId() > 0);
     }
-    
+
+    @Test 
+    public void CustomerRepository_DeleteCustomerById_ReturnCustomerIsEmpty() {
+         Customer customer = Customer.builder()
+            .firstName("Brandon")
+            .lastName("Williams")
+            .email("brandonWilliams@vsu.edu")
+            .phoneNumber("404-890-4527")
+            .reservations(null)
+            .build();
+
+        
+        customerRepository.save(customer);
+        customerRepository.deleteById(customer.getId());
+
+        Optional<Customer> returnedCustomer = customerRepository.findById(customer.getId());
+
+        Assertions.assertTrue(returnedCustomer.isEmpty());
+    }
+
 }
