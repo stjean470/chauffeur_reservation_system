@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,18 +24,28 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "reservation_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ReservationType reservationType;
     
-    @Column(name = "pickupAddress")
+    @Column(name = "pickupAddress", nullable = false)
     private String pickupAddress;
     
     @Column(name = "destination")
     private String destination;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "time")
+    @Column(name = "time", nullable = false)
     private LocalTime time;
+
+    @Column(name = "trip_duration")
+    private int trip_duration;
+
+    @Column(name = "num_of_guests", nullable = false)
+    private int numOfGuests;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
@@ -42,21 +53,28 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(String pickupAddress, String destination, LocalDate date, LocalTime time, Customer customer) {
+    public Reservation(ReservationType reservationType, String pickupAddress, String destination, LocalDate date,
+            LocalTime time, int trip_duration, int numOfGuests, Customer customer) {
+        this.reservationType = reservationType;
         this.pickupAddress = pickupAddress;
         this.destination = destination;
         this.date = date;
         this.time = time;
+        this.trip_duration = trip_duration;
+        this.numOfGuests = numOfGuests;
         this.customer = customer;
     }
 
-    public Reservation(long id, String pickupAddress, String destination, LocalDate date, LocalTime time,
-            Customer customer) {
+    public Reservation(long id, ReservationType reservationType, String pickupAddress, String destination,
+            LocalDate date, LocalTime time, int trip_duration, int numOfGuests, Customer customer) {
         this.id = id;
+        this.reservationType = reservationType;
         this.pickupAddress = pickupAddress;
         this.destination = destination;
         this.date = date;
         this.time = time;
+        this.trip_duration = trip_duration;
+        this.numOfGuests = numOfGuests;
         this.customer = customer;
     }
 
@@ -66,6 +84,14 @@ public class Reservation {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public ReservationType getReservationType() {
+        return reservationType;
+    }
+
+    public void setReservationType(ReservationType reservationType) {
+        this.reservationType = reservationType;
     }
 
     public String getPickupAddress() {
@@ -100,6 +126,22 @@ public class Reservation {
         this.time = time;
     }
 
+    public int getTrip_duration() {
+        return trip_duration;
+    }
+
+    public void setTrip_duration(int trip_duration) {
+        this.trip_duration = trip_duration;
+    }
+
+    public int getNumOfGuests() {
+        return numOfGuests;
+    }
+
+    public void setNumOfGuests(int numOfGuests) {
+        this.numOfGuests = numOfGuests;
+    }
+
     public Customer getCustomer() {
         return customer;
     }
@@ -113,10 +155,13 @@ public class Reservation {
         final int prime = 31;
         int result = 1;
         result = prime * result + (int) (id ^ (id >>> 32));
+        result = prime * result + ((reservationType == null) ? 0 : reservationType.hashCode());
         result = prime * result + ((pickupAddress == null) ? 0 : pickupAddress.hashCode());
         result = prime * result + ((destination == null) ? 0 : destination.hashCode());
         result = prime * result + ((date == null) ? 0 : date.hashCode());
         result = prime * result + ((time == null) ? 0 : time.hashCode());
+        result = prime * result + trip_duration;
+        result = prime * result + numOfGuests;
         result = prime * result + ((customer == null) ? 0 : customer.hashCode());
         return result;
     }
@@ -131,6 +176,8 @@ public class Reservation {
             return false;
         Reservation other = (Reservation) obj;
         if (id != other.id)
+            return false;
+        if (reservationType != other.reservationType)
             return false;
         if (pickupAddress == null) {
             if (other.pickupAddress != null)
@@ -152,6 +199,10 @@ public class Reservation {
                 return false;
         } else if (!time.equals(other.time))
             return false;
+        if (trip_duration != other.trip_duration)
+            return false;
+        if (numOfGuests != other.numOfGuests)
+            return false;
         if (customer == null) {
             if (other.customer != null)
                 return false;
@@ -162,9 +213,14 @@ public class Reservation {
 
     @Override
     public String toString() {
-        return "Reservation [id=" + id + ", pickupAddress=" + pickupAddress + ", destination=" + destination + ", date="
-                + date + ", time=" + time + ", customer=" + customer + "]";
+        return "Reservation [id=" + id + ", reservationType=" + reservationType + ", pickupAddress=" + pickupAddress
+                + ", destination=" + destination + ", date=" + date + ", time=" + time + ", trip_duration="
+                + trip_duration + ", numOfGuests=" + numOfGuests + ", customer=" + customer + "]";
     }
+
+    
+
+    
 
     
     
