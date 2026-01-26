@@ -22,11 +22,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
-import com.personal.chauffeur_reservation_system.mapper.CustomerMapper;
 import com.personal.chauffeur_reservation_system.mapper.ReservationMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
-import com.personal.chauffeur_reservation_system.repository.CustomerRepository;
 import com.personal.chauffeur_reservation_system.repository.ReservationRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -35,15 +33,11 @@ public class ReservationServiceTest {
     @Mock
     private ReservationRepository reservationRepository;
 
-    @Mock
-    private CustomerRepository customerRepository;
-
     @InjectMocks
     private ReservationService reservationService;
 
 
     @InjectMocks
-    private CustomerService customerService;
 
     private Customer customer;
 
@@ -56,14 +50,11 @@ public class ReservationServiceTest {
     @BeforeEach
     public void init() {
         customer = Customer.builder()
-            .id(1L)
             .firstName("Brandon")
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
-        customerDto = CustomerMapper.mapToCustomerDto(customer);
 
         reservation = Reservation.builder()
             .id(1L)
@@ -72,6 +63,7 @@ public class ReservationServiceTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(4)
             .build();
         
         reservationDto = ReservationMapper.mapReservationToReservationDto(reservation);
@@ -81,16 +73,8 @@ public class ReservationServiceTest {
 
     @Test
     public void ReservationService_createReservation_ReturnSavedReservation() {
-
-        when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(customer);
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(reservationRepository.save(Mockito.any(Reservation.class))).thenReturn(reservation);
-
-        CustomerDto saveCustomer = customerService.createCustomer(customerDto);
         ReservationDto savedReservation = reservationService.createReservation(reservationDto);
-
-
-        Assertions.assertNotNull(saveCustomer);
         Assertions.assertNotNull(savedReservation);
     }
 
@@ -103,6 +87,7 @@ public class ReservationServiceTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(2)
             .build();
         
         List<Reservation> reservations = Arrays.asList(reservation, reservation2);

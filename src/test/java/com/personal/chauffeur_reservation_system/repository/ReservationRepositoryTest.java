@@ -22,9 +22,6 @@ public class ReservationRepositoryTest {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository; 
-
     @Test
     public void ReservationRepository_SaveReservation_ReturnSavedReservation() {
         //Arrange. Must create the customer first before we create the reservation. Reservation is dependent on the customer
@@ -33,7 +30,6 @@ public class ReservationRepositoryTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
 
         Reservation reservation = Reservation.builder()
@@ -42,19 +38,16 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(4)
             .build();
 
 
         //Act. Add the customer to the database before the customer
-        customer.getReservations().add(reservation);
-        Customer savedCustomer = customerRepository.save(customer);
         Reservation savedReservation = reservationRepository.save(reservation);
 
         //Assert
-        Assertions.assertNotNull(savedCustomer);
         Assertions.assertNotNull(savedReservation);
         Assertions.assertNotNull(savedReservation.getCustomer()); 
-        Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
     }
 
     @Test
@@ -65,7 +58,6 @@ public class ReservationRepositoryTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
 
         Reservation reservation1 = Reservation.builder()
@@ -74,6 +66,7 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(6)
             .build();
             
         Reservation reservation2 = Reservation.builder()
@@ -82,19 +75,15 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(4)
             .build();
 
         //Act. Add the customer to the database before the customer
-        customer.getReservations().add(reservation1);
-        customer.getReservations().add(reservation2);
-        Customer savedCustomer = customerRepository.save(customer);
         reservationRepository.save(reservation1);
         reservationRepository.save(reservation2);
 
         //Assert
-        Assertions.assertNotNull(savedCustomer);
         Assertions.assertNotNull(reservationRepository.findAll());
-        Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
         Assertions.assertTrue(reservationRepository.findAll().size() > 0);
     } 
 
@@ -105,7 +94,6 @@ public class ReservationRepositoryTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
 
         Reservation reservation = Reservation.builder()
@@ -114,12 +102,9 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(2)
             .build();
 
-
-        //Act. Add the customer to the database before the customer
-        customer.getReservations().add(reservation);
-        customerRepository.save(customer);
         reservationRepository.save(reservation);
 
         Optional<Reservation> returnedReservation = reservationRepository.findById(1L);
@@ -135,7 +120,6 @@ public class ReservationRepositoryTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
 
         Reservation reservation = Reservation.builder()
@@ -144,12 +128,11 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(3)
             .build();
 
 
         //Act. Add the customer to the database before the customer
-        customer.getReservations().add(reservation);
-        Customer savedCustomer = customerRepository.save(customer);
         Reservation savedReservation = reservationRepository.save(reservation);
 
         Reservation reservationToUpdate = reservationRepository.findById(savedReservation.getId()).get();
@@ -161,9 +144,7 @@ public class ReservationRepositoryTest {
         Reservation updatedReservation = reservationRepository.save(reservationToUpdate);
 
         //Assert
-        Assertions.assertNotNull(savedCustomer);
         Assertions.assertNotNull(updatedReservation);
-        Assertions.assertTrue(savedCustomer.getReservations().size() > 0);
     }
     
      @Test
@@ -173,7 +154,6 @@ public class ReservationRepositoryTest {
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
 
         Reservation reservation = Reservation.builder()
@@ -182,12 +162,11 @@ public class ReservationRepositoryTest {
             .date(LocalDate.now())
             .time(LocalTime.now())
             .customer(customer)
+            .numOfGuests(7)
             .build();
 
 
         //Act. Add the customer to the database before the customer
-        customer.getReservations().add(reservation);
-        customerRepository.save(customer);
         reservationRepository.save(reservation);
 
         reservationRepository.deleteById(reservation.getId());

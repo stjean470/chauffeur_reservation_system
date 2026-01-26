@@ -31,11 +31,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personal.chauffeur_reservation_system.dto.CustomerDto;
 import com.personal.chauffeur_reservation_system.dto.ReservationDto;
 import com.personal.chauffeur_reservation_system.exceptions.CustomerNotFoundException;
-import com.personal.chauffeur_reservation_system.mapper.CustomerMapper;
 import com.personal.chauffeur_reservation_system.mapper.ReservationMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
-import com.personal.chauffeur_reservation_system.service.CustomerService;
 import com.personal.chauffeur_reservation_system.service.ReservationService;
 
 @WebMvcTest(controllers = ReservationController.class)
@@ -47,9 +45,6 @@ public class ReservationControllerTest {
 
     @MockitoBean
     private ReservationService reservationService;
-
-    @MockitoBean
-    private CustomerService customerService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -65,14 +60,11 @@ public class ReservationControllerTest {
     @BeforeEach
     public void init() {
         customer = Customer.builder()
-            .id(1L)
             .firstName("Brandon")
             .lastName("Williams")
             .email("brandonWilliams@vsu.edu")
             .phoneNumber("404-890-4527")
-            .reservations(new ArrayList<>())
             .build();
-        customerDto = CustomerMapper.mapToCustomerDto(customer);
 
         Reservation reservation = Reservation.builder()
             .id(1L)

@@ -11,27 +11,21 @@ import com.personal.chauffeur_reservation_system.exceptions.ReservationNotFoundE
 import com.personal.chauffeur_reservation_system.mapper.ReservationMapper;
 import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
-import com.personal.chauffeur_reservation_system.repository.CustomerRepository;
 import com.personal.chauffeur_reservation_system.repository.ReservationRepository;
 
 @Service
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final CustomerRepository customerRepository;
 
-    public ReservationService(ReservationRepository reservationRepository, CustomerRepository customerRepository) {
+    public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
-        this.customerRepository = customerRepository;
     }
 
     public ReservationDto createReservation(ReservationDto reservationDto) {
-        Customer customerMakingReservation = customerRepository.findById(reservationDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException("Customer does not exist. Can't make Reservation"));
-        Reservation reservation = ReservationMapper.mapReservationDtoToReservation(reservationDto, customerMakingReservation);
-        customerMakingReservation.getReservations().add(reservation);
-        customerRepository.save(customerMakingReservation);
+        
+        Reservation reservation = ReservationMapper.mapReservationDtoToReservation(reservationDto);
         Reservation savedReservation = reservationRepository.save(reservation);
-
         return ReservationMapper.mapReservationToReservationDto(savedReservation);
     }
 
@@ -50,10 +44,15 @@ public class ReservationService {
 
     public ReservationDto updateReservation(long id, ReservationDto reservationDto) {
         Reservation reservation = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+        reservation.setReservationType(reservationDto.getReservationType());
         reservation.setPickupAddress(reservationDto.getPickupAddress());
+        reservation.setCustomer(reservationDto.getCustomer());
+        reservation.setTripType(reservationDto.getTripType());
         reservation.setDestination(reservationDto.getDestination());
         reservation.setDate(reservationDto.getDate());
         reservation.setTime(reservationDto.getTime());
+        reservation.setTrip_duration(reservationDto.getTrip_duration());
+        reservation.setNumOfGuests(reservationDto.getNumOfGuests());
         Reservation updatedReservation = reservationRepository.save(reservation);
         return ReservationMapper.mapReservationToReservationDto(updatedReservation);
     }

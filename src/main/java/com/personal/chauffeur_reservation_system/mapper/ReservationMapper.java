@@ -5,16 +5,18 @@ import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.Reservation;
 
 public class ReservationMapper {
-    public static Reservation mapReservationDtoToReservation(ReservationDto reservationDto, Customer customer) {
+    public static Reservation mapReservationDtoToReservation(ReservationDto reservationDto) {
         return new Reservation(
+            reservationDto.getId(),
             reservationDto.getReservationType(),
+            reservationDto.getCustomer(),
+            reservationDto.getTripType(),
             reservationDto.getPickupAddress(),
             reservationDto.getDestination(),
             reservationDto.getDate(),
             reservationDto.getTime(),
             reservationDto.getTrip_duration(),
-            reservationDto.getNumOfGuests(),
-            customer     
+            reservationDto.getNumOfGuests()     
         );
     }
 
@@ -22,13 +24,14 @@ public class ReservationMapper {
             return new ReservationDto(
                 reservation.getId(),
                 reservation.getReservationType(),
+                reservation.getCustomer(),
+                reservation.getTripType(),
                 reservation.getPickupAddress(),
                 reservation.getDestination(),
                 reservation.getDate(),
                 reservation.getTime(),
                 reservation.getTrip_duration(),
-                reservation.getNumOfGuests(),
-                reservation.getCustomer().getId()        
+                reservation.getNumOfGuests()     
             );
         
         }

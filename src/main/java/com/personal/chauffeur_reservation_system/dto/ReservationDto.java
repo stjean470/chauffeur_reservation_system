@@ -3,44 +3,48 @@ package com.personal.chauffeur_reservation_system.dto;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.personal.chauffeur_reservation_system.model.Customer;
 import com.personal.chauffeur_reservation_system.model.ReservationType;
 
 public class ReservationDto {
     private long id;
     private ReservationType reservationType;
+    private Customer customer;
+    private String tripType;
     private String pickupAddress;
     private String destination;
     private LocalDate date;
     private LocalTime time;
-    private int trip_duration;
+    private String trip_duration;
     private int numOfGuests;
-    private long customerId;
 
     public ReservationDto() {}
 
-    public ReservationDto(ReservationType reservationType, String pickupAddress, String destination, LocalDate date,
-            LocalTime time, int trip_duration, int numOfGuests, long customerId) {
+    public ReservationDto(ReservationType reservationType, Customer customer, String tripType, String pickupAddress, String destination, LocalDate date,
+            LocalTime time, String trip_duration, int numOfGuests) {
         this.reservationType = reservationType;
+        this.customer = customer;
+        this.tripType = tripType;
         this.pickupAddress = pickupAddress;
         this.destination = destination;
         this.date = date;
         this.time = time;
         this.trip_duration = trip_duration;
         this.numOfGuests = numOfGuests;
-        this.customerId = customerId;
     }
 
-    public ReservationDto(long id, ReservationType reservationType, String pickupAddress, String destination,
-            LocalDate date, LocalTime time, int trip_duration, int numOfGuests, long customerId) {
+    public ReservationDto(long id, ReservationType reservationType, Customer customer, String tripType, String pickupAddress, String destination,
+            LocalDate date, LocalTime time, String trip_duration, int numOfGuests) {
         this.id = id;
         this.reservationType = reservationType;
+        this.customer = customer;
+        this.tripType = tripType;
         this.pickupAddress = pickupAddress;
         this.destination = destination;
         this.date = date;
         this.time = time;
         this.trip_duration = trip_duration;
         this.numOfGuests = numOfGuests;
-        this.customerId = customerId;
     }
 
     public long getId() {
@@ -57,6 +61,22 @@ public class ReservationDto {
 
     public void setReservationType(ReservationType reservationType) {
         this.reservationType = reservationType;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public String getTripType() {
+        return tripType;
+    }
+
+    public void setTripType(String tripType) {
+        this.tripType = tripType;
     }
 
     public String getPickupAddress() {
@@ -91,11 +111,11 @@ public class ReservationDto {
         this.time = time;
     }
 
-    public int getTrip_duration() {
+    public String getTrip_duration() {
         return trip_duration;
     }
 
-    public void setTrip_duration(int trip_duration) {
+    public void setTrip_duration(String trip_duration) {
         this.trip_duration = trip_duration;
     }
 
@@ -107,20 +127,18 @@ public class ReservationDto {
         this.numOfGuests = numOfGuests;
     }
 
-    public long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
-    }
-
     @Override
     public String toString() {
-        return "ReservationDto [id=" + id + ", reservationType=" + reservationType + ", pickupAddress=" + pickupAddress
-                + ", destination=" + destination + ", date=" + date + ", time=" + time + ", trip_duration="
-                + trip_duration + ", numOfGuests=" + numOfGuests + ", customerId=" + customerId + "]";
+        return "ReservationDto [id=" + id + ", reservationType=" + reservationType + ", customer=" + customer
+                + ", tripType=" + tripType + ", pickupAddress=" + pickupAddress + ", destination=" + destination
+                + ", date=" + date + ", time=" + time + ", trip_duration=" + trip_duration + ", numOfGuests="
+                + numOfGuests + "]";
     }
+
+    
+
+
+   
 
     
     

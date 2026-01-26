@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,60 +14,28 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Builder;
-
-@Entity
+// write a java class for this Customer to be embeddable entity with the following attributes: id, firstName, lastName, email, phoneNumber.
+@Embeddable
 @Builder
-@Table(name = "CUSTOMER")
 public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
 
-    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number")
     private String phoneNumber;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String email, String phoneNumber,
-            List<Reservation> reservations) {
+    public Customer(String firstName, String lastName, String email, String phoneNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.reservations = reservations;
     }
 
-    public Customer(long id, String firstName, String lastName, String email, String phoneNumber,
-            List<Reservation> reservations) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.reservations = reservations;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -100,24 +69,14 @@ public class Customer {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((reservations == null) ? 0 : reservations.hashCode());
         return result;
     }
 
@@ -130,8 +89,6 @@ public class Customer {
         if (getClass() != obj.getClass())
             return false;
         Customer other = (Customer) obj;
-        if (id != other.id)
-            return false;
         if (firstName == null) {
             if (other.firstName != null)
                 return false;
@@ -152,19 +109,16 @@ public class Customer {
                 return false;
         } else if (!phoneNumber.equals(other.phoneNumber))
             return false;
-        if (reservations == null) {
-            if (other.reservations != null)
-                return false;
-        } else if (!reservations.equals(other.reservations))
-            return false;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", phoneNumber=" + phoneNumber + "]";
+        return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNumber="
+                + phoneNumber + "]";
     }
+
+    
 
     
 
